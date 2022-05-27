@@ -1,8 +1,6 @@
 /*
-    ChangeLog: (voor Versie 0.3)
-    - stuursysteem aangepast van atmega2560 naar atmega328P
-    - stepper pins veranderd naar pins op atmega328P
-    - code aangepast zodat de rechtdoorrij demo gegeven kan worden
+    ChangeLog: (voor Versie 0.4)
+    - toevoeging functie voor bocht maken
  */
 // --- includes codeblocks ---
 #include <avr/io.h>
@@ -14,12 +12,19 @@
 // --- custom defines ---
 #define stepMode achtste
 
-//verwachte interrupt door bepaalde waarde van ultrasone sensor
-//{
-    //stepper motor stoppen
-    //wachten op singaal dat gevaar weg is
-    //opnieuw beginnen in sensorloop / verder gaan met bocht functie
-//}
+void bocht(int dir)
+{
+    //1) 10cm naar voren rijden
+    stepperGoto(97, voorruit, stepMode);
+    //2) bocht maken naar directie bocht(+- 90 graden)
+    singleStepperGoTo(236,voorruit,stepMode, dir);
+    //3) afstand van middenstreep rijden
+    stepperGoto(68, voorruit, stepMode);
+    //4 bocht maken naar directie bocht(+- 90 graden)
+    singleStepperGoTo(236,voorruit,stepMode, dir);
+    //5) laatste 10cm naar voren voor beginpositie
+    stepperGoto(97, voorruit, stepMode);
+}
 
 int main(void)
 {
