@@ -10,8 +10,8 @@
 #define stepperDir2 PB3 //10
 #define stepperPin2 PB2 //11
 
-#define voorruit 1
-#define achteruit 0
+#define voorruit 0
+#define achteruit 1
 
 #define linker 1
 #define rechter 2

@@ -137,7 +137,7 @@ int main(void)
         stepperGoto(1000, voorruit, stepMode);
       c2:	88 ee       	ldi	r24, 0xE8	; 232
       c4:	93 e0       	ldi	r25, 0x03	; 3
-      c6:	61 e0       	ldi	r22, 0x01	; 1
+      c6:	60 e0       	ldi	r22, 0x00	; 0
       c8:	70 e0       	ldi	r23, 0x00	; 0
       ca:	48 e0       	ldi	r20, 0x08	; 8
       cc:	50 e0       	ldi	r21, 0x00	; 0
