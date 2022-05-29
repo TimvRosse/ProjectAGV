@@ -14,7 +14,7 @@
 #define achteruit 1
 
 #define linker 1
-#define rechter 2
+#define rechter 0
 
 #define heel 1
 #define half 2

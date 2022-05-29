@@ -124,7 +124,7 @@ void singleStepperGoTo(int steps, int dir, int mode, int stepper)
         }
     }
 
-    if(stepper = 2) //stepper 2 (rechts?)
+    if(stepper = 0) //stepper 2 (rechts?)
     {
         if(dir)
         {

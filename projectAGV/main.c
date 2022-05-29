@@ -33,7 +33,7 @@ int main(void)
     //init sensor library's
 
     initStepper();
-    stepperSetSpeed(1, stepMode);
+    stepperSetSpeed(0.7, stepMode);
 
     while(1)
     {
@@ -62,7 +62,8 @@ int main(void)
             //signaal geven met buzzer
         }
 
-        stepperGoto(1000, voorruit, stepMode);
+        stepperGoto(500, voorruit, stepMode);
+        bocht(linker);
         //stepper motor .. stappen laten maken
     }
 
