@@ -4,11 +4,11 @@
 
 #define stepperLoc DDRB
 #define stepperPort PORTB
-#define stepperDir1 PB1 //8, onderste
-#define stepperPin1 PB0 //9
+#define stepperDir1 PB2 //10, onderste
+#define stepperPin1 PB1 //9
 
-#define stepperDir2 PB3 //10
-#define stepperPin2 PB2 //11
+#define stepperDir2 PB4 //12
+#define stepperPin2 PB3  //11
 
 #define voorruit 0
 #define achteruit 1
