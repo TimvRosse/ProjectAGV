@@ -2,12 +2,20 @@
 1653655940 source:c:\users\timva\documents\projectagv\projectagv\fuse.c
 	<avr/io.h>
 
+<<<<<<< HEAD
 1653827003 source:c:\users\timva\documents\projectagv\projectagv\main.c
+=======
+1653826370 source:c:\users\timva\documents\projectagv\projectagv\main.c
+>>>>>>> main
 	<avr/io.h>
 	<avr/delay.h>
 	"stepperLibV1.0.h"
 
+<<<<<<< HEAD
 1653827103 c:\users\timva\documents\projectagv\projectagv\stepperlibv1.0.h
+=======
+1653664963 c:\users\timva\documents\projectagv\projectagv\stepperlibv1.0.h
+>>>>>>> main
 
 1653827103 source:c:\users\timva\documents\projectagv\projectagv\stepperlibv1.0.c
 	<avr/io.h>
