@@ -62,8 +62,8 @@ int main(void)
             //signaal geven met buzzer
         }
 
-        stepperGoto(500, voorruit, stepMode);
-        bocht(linker);
+        stepperGoto(200, voorruit, stepMode);
+        bocht(rechter);
         //stepper motor .. stappen laten maken
     }
 

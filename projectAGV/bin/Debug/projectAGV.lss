@@ -201,16 +201,16 @@ int main(void)
             //signaal geven met buzzer
         }
 
-        stepperGoto(500, voorruit, stepMode);
-     132:	84 ef       	ldi	r24, 0xF4	; 244
-     134:	91 e0       	ldi	r25, 0x01	; 1
+        stepperGoto(200, voorruit, stepMode);
+     132:	88 ec       	ldi	r24, 0xC8	; 200
+     134:	90 e0       	ldi	r25, 0x00	; 0
      136:	60 e0       	ldi	r22, 0x00	; 0
      138:	70 e0       	ldi	r23, 0x00	; 0
      13a:	48 e0       	ldi	r20, 0x08	; 8
      13c:	50 e0       	ldi	r21, 0x00	; 0
      13e:	0e 94 d1 00 	call	0x1a2	; 0x1a2 <stepperGoto>
-        bocht(linker);
-     142:	81 e0       	ldi	r24, 0x01	; 1
+        bocht(rechter);
+     142:	80 e0       	ldi	r24, 0x00	; 0
      144:	90 e0       	ldi	r25, 0x00	; 0
      146:	0e 94 53 00 	call	0xa6	; 0xa6 <bocht>
      14a:	f3 cf       	rjmp	.-26     	; 0x132 <main+0x1c>
