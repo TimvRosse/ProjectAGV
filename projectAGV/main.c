@@ -70,7 +70,7 @@ int main(void)
     return 0;
 }
 
-int Afstand(int tijd)
+int Afstand(int tijd) // functie om de afstand te berekenen.
 {
     int Afstand_berekenen;
     Afstand_berekenen = tijd / 2 * 0.034;
