@@ -8,11 +8,10 @@
  */
 
  /*
-        Changelog V1:
-        - twee IR sensoren toegevoegd
-        - Arduino nano aansturing toegevoegd
-        - Mogelijkheid voor buzzer toegevoegd
-        - init toegevoegd
+        Changelog V1.1:
+        - Reactie op Ir sensoren dmv Buzzer toon
+        - -> Motoren stoppen ook met draaien voor bepaalde tijd
+        - Pins Ir sensoren gedefined
  */
 
  // --- avr includes
@@ -24,6 +23,8 @@
 #define motorPin PD7
 #define bochtPin PD6
 #define buzzerPin PD2
+#define IrSen1 PB0
+#define IrSen2 PB1
 
 void init(void)
 {
@@ -35,26 +36,40 @@ void init(void)
 
     //init pins:
     PORTD |= _BV(motorPin);
-    PORTB |= _BV(PB0);
-    PORTB |= _BV(PB2);
+    PORTB |= _BV(IrSen1);
+    PORTB |= _BV(IrSen2);
 
     //init PCINT
     PCICR |= (1 << PCIE0);
-    PCMSK0 |= ((1 << PCINT0) | (1 << PCINT2));
+    PCMSK0 |= ((1 << IrSen1) | (1 << IrSen2));
 
     //init interrupt
     sei();
 }
 
+void buzzer(int freq, int aantal)
+{
+    for(int i = 0; i < aantal; i++)
+    {
+        PORTD ^= _BV(buzzerPin);
+        _delay_us(freq);
+
+    }
+}
+
 ISR(PCINT0_vect)
 {
-  if(bit_is_clear(PINB, PB0))
-  {
-      PORTB |= _BV(PB5);
-  }
-  if(bit_is_clear(PINB, PB2))
+    _delay_ms(25);
+    if(bit_is_clear(PINB, IrSen1))
     {
-        PORTB &= ~_BV(PB5);
+        PORTD |= _BV(motorPin);
+        buzzer(350, 1000);
+        _delay_ms(250);
+        PORTD &= ~_BV(motorPin);
+    }
+    if(bit_is_clear(PINB, IrSen2))
+    {
+        buzzer(350,1000);
     }
 }
 
@@ -65,8 +80,6 @@ int main(void)
 
     while(1)
     {
-        _delay_ms(100);
-
 
     }
 
