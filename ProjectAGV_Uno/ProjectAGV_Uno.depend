@@ -1,8 +1,8 @@
 # depslib dependency file v1.0
-1653932298 source:c:\users\timva\documents\projectagv\projectagv_uno\fuse.c
+1654014164 source:c:\users\timva\documents\projectagv\projectagv_uno\fuse.c
 	<avr/io.h>
 
-1653932430 source:c:\users\timva\documents\projectagv\projectagv_uno\main.c
+1654014873 source:c:\users\timva\documents\projectagv\projectagv_uno\main.c
 	<avr/io.h>
 	<avr/delay.h>
 
