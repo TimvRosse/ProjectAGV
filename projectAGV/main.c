@@ -11,6 +11,7 @@
 
 // --- custom defines ---
 #define stepMode achtste
+#define inpPinUno PD3
 
 void bocht(int dir)
 {
@@ -29,6 +30,7 @@ void bocht(int dir)
 int main(void)
 {
 
+    PORTD |= _BV(inpPinUno);
     //init
     //init sensor library's
 
@@ -61,9 +63,13 @@ int main(void)
             //stilstaan dmv steppers
             //signaal geven met buzzer
         }
+        if(bit_is_clear(PIND, inpPinUno))
+        {
+            stepperGoto(200, voorruit, stepMode);
+            bocht(rechter);
+        }
 
-        stepperGoto(200, voorruit, stepMode);
-        bocht(rechter);
+
         //stepper motor .. stappen laten maken
     }
 
