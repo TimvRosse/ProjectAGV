@@ -12,6 +12,15 @@
 // --- custom defines ---
 #define stepMode achtste
 
+#define echo (1<<3)
+#define Trigg 1
+
+void init()
+{
+    DDRC &= ~echo;// pins voor de ultrasone sensor
+    DDRD |= Trigg;
+}
+
 void bocht(int dir)
 {
     //1) 10cm naar voren rijden
@@ -70,8 +79,21 @@ int main(void)
     return 0;
 }
 
-int Afstand(int tijd) // functie om de afstand te berekenen.
+int Afstand() // functie om de afstand te berekenen.
 {
+    int tijd;
+    PORTD &= ~Trigg;
+    //Delay van min 2 microsec
+    PORTD |= Trigg;
+    //delay van min 10 microsec
+    PORTD &= ~Trigg;
+    //start timer om tijd van afstand te meten
+    if((PINC & echo) == 1);
+        {
+            //stop timer
+            tijd = 1;//De gemete tijd van de timer hier
+        }
+
     int Afstand_berekenen;
     Afstand_berekenen = tijd / 2 * 0.034;
     return Afstand_berekenen;
