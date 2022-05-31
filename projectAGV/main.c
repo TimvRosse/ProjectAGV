@@ -95,6 +95,6 @@ int Afstand() // functie om de afstand te berekenen.
         }
 
     int Afstand_berekenen;
-    Afstand_berekenen = tijd / 2 * 0.034;
+    Afstand_berekenen = tijd / 2 * 0.034; //Let op, hier moet nog rekening gehouden worden met de tijd van de timer en de prescaler
     return Afstand_berekenen;
 }
