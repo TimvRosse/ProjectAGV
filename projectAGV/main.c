@@ -11,7 +11,7 @@
 
 // --- custom defines ---
 #define stepMode achtste
-#define inpPinUno PD3
+#define inpPinUno PC2
 
 void bocht(int dir)
 {
@@ -30,7 +30,7 @@ void bocht(int dir)
 int main(void)
 {
 
-    PORTD |= _BV(inpPinUno);
+    PORTC |= _BV(inpPinUno);
     //init
     //init sensor library's
 
@@ -63,22 +63,15 @@ int main(void)
             //stilstaan dmv steppers
             //signaal geven met buzzer
         }
-        if(bit_is_clear(PIND, inpPinUno))
-        {
+        //if(bit_is_clear(PIND, inpPinUno))
+        //{
             stepperGoto(200, voorruit, stepMode);
-            bocht(rechter);
-        }
+            //bocht(rechter);
+        //}
 
 
         //stepper motor .. stappen laten maken
     }
 
     return 0;
-}
-
-int Afstand(int tijd) // functie om de afstand te berekenen.
-{
-    int Afstand_berekenen;
-    Afstand_berekenen = tijd / 2 * 0.034;
-    return Afstand_berekenen;
 }

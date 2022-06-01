@@ -2,13 +2,15 @@
 
 #define STEPPERLIBV1_0_H_INCLUDED
 
-#define stepperLoc DDRB
-#define stepperPort PORTB
-#define stepperDir1 PB1 //8, onderste
-#define stepperPin1 PB0 //9
+#define stepperLoc DDRD
+#define stepperPort PORTD
+#define stepperLoc2 DDRB
+#define stepperPort2 PORTB
+#define stepperDir1 PD2 //8, onderste
+#define stepperPin1 PD3 //9
 
-#define stepperDir2 PB3 //10
-#define stepperPin2 PB2 //11
+#define stepperDir2 PD7 //10
+#define stepperPin2 PB0 //11
 
 #define voorruit 0
 #define achteruit 1

@@ -36,7 +36,7 @@ void initStepper(void)
 {
     stepperLoc |= _BV(stepperPin1);
     stepperLoc |= _BV(stepperDir1);
-    stepperLoc |= _BV(stepperPin2);
+    stepperLoc2 |= _BV(stepperPin2);
     stepperLoc |= _BV(stepperDir2);
 
     TCCR1A = 0;
@@ -70,7 +70,7 @@ void stepperGoto(int steps, int dir, int mode) //aantal steps, directie, stepMod
            if(TIFR1 & (1 << OCF1A))
             {
                 stepperPort ^= (1 << stepperPin1);
-                stepperPort ^= (1 << stepperPin2);
+                stepperPort2 ^= (1 << stepperPin2);
                 TCNT1 = 0;
                 OCR1A = snelheid;
                 wachten = 1;
@@ -144,7 +144,7 @@ void singleStepperGoTo(int steps, int dir, int mode, int stepper)
             {
                 if(TIFR1 & (1 << OCF1A))
                 {
-                    stepperPort ^= (1 << stepperPin2);
+                    stepperPort2 ^= (1 << stepperPin2);
                     TCNT1 = 0;
                     OCR1A = snelheid;
                     wachten = 1;
