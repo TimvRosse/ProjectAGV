@@ -20,22 +20,21 @@
 #include <avr/interrupt.h>
 
 // --- custom defines
-#define motorPin PD7
-#define bochtPin PD6
-#define buzzerPin PD2
-#define IrSen1 PB0
-#define IrSen2 PB1
+#define motorPin PC4 //PC2 op nano
+#define bochtPin PC5 //PC3 op nano
+#define buzzerPin PD6
+#define IrSen1 PB0 //rechter
+#define IrSen2 PB1 // linker
 
 void init(void)
 {
     //DDR Reg:
-    DDRD |= _BV(motorPin);
-    DDRD |= _BV(bochtPin);
+    DDRC |= _BV(motorPin);
+    DDRC |= _BV(bochtPin);
     DDRD |= _BV(buzzerPin);
-    DDRB |= _BV(PB5);
 
     //init pins:
-    PORTD |= _BV(motorPin);
+    PORTC |= _BV(motorPin);
     PORTB |= _BV(IrSen1);
     PORTB |= _BV(IrSen2);
 
@@ -62,14 +61,17 @@ ISR(PCINT0_vect)
     _delay_ms(25);
     if(bit_is_clear(PINB, IrSen1))
     {
-        PORTD |= _BV(motorPin);
+        PORTC |= _BV(motorPin);
         buzzer(350, 1000);
-        _delay_ms(250);
-        PORTD &= ~_BV(motorPin);
+        _delay_ms(500);
+        PORTC &= ~_BV(motorPin);
     }
     if(bit_is_clear(PINB, IrSen2))
     {
-        buzzer(350,1000);
+        PORTC |= _BV(motorPin);
+        buzzer(350, 1000);
+        _delay_ms(500);
+        PORTC &= ~_BV(motorPin);
     }
 }
 

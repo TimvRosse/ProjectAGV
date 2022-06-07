@@ -11,7 +11,7 @@
 
 // --- custom defines ---
 #define stepMode achtste
-#define inpPinUno PC2
+#define inpPinUno PC3
 
 void bocht(int dir)
 {
@@ -63,11 +63,11 @@ int main(void)
             //stilstaan dmv steppers
             //signaal geven met buzzer
         }
-        //if(bit_is_clear(PIND, inpPinUno))
-        //{
-            stepperGoto(200, voorruit, stepMode);
+        if(bit_is_clear(PINC, inpPinUno))
+        {
+            stepperGoto(20, voorruit, stepMode);
             //bocht(rechter);
-        //}
+        }
 
 
         //stepper motor .. stappen laten maken
