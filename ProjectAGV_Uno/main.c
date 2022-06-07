@@ -8,10 +8,9 @@
  */
 
  /*
-        Changelog V1.1:
-        - Reactie op Ir sensoren dmv Buzzer toon
-        - -> Motoren stoppen ook met draaien voor bepaalde tijd
-        - Pins Ir sensoren gedefined
+        Changelog V1.2:
+        - Ultrasone sensor toegevoegd
+
  */
 
  // --- avr includes
@@ -25,6 +24,8 @@
 #define buzzerPin PD6
 #define IrSen1 PB0 //rechter
 #define IrSen2 PB1 // linker
+#define triggerPin PD7
+#define echoPin PB2
 
 void init(void)
 {
@@ -32,15 +33,20 @@ void init(void)
     DDRC |= _BV(motorPin);
     DDRC |= _BV(bochtPin);
     DDRD |= _BV(buzzerPin);
+    DDRD |= _BV(triggerPin);
+    DDRB &= ~_BV(echoPin);
 
     //init pins:
-    PORTC |= _BV(motorPin);
     PORTB |= _BV(IrSen1);
     PORTB |= _BV(IrSen2);
 
     //init PCINT
     PCICR |= (1 << PCIE0);
     PCMSK0 |= ((1 << IrSen1) | (1 << IrSen2));
+
+    //init timer0 voor ultrasone //16000000 / 256 / 8 = ~7800Hz
+    TCCR0A = 0;
+    TCCR0B = (0 << CS00) | (1 << CS01) | (1 << CS02);
 
     //init interrupt
     sei();
@@ -73,6 +79,13 @@ ISR(PCINT0_vect)
         _delay_ms(500);
         PORTC &= ~_BV(motorPin);
     }
+}
+
+int UltraDist (void)
+{
+    PORTD |= _BV(triggerPin);
+    _delay_us(10);
+    PORTD &= ~_BV(triggerPin);
 }
 
 int main(void)
