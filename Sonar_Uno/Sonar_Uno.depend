@@ -1,0 +1,4 @@
+# depslib dependency file v1.0
+1655319918 source:c:\users\jasper\documents\github\projectagv\sonar_uno\fuse.c
+	<avr/io.h>
+

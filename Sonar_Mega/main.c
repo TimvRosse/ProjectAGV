@@ -8,10 +8,6 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-#define led1 PB7
-#define led2 PB6
-#define led3 PB5
-#define knop PF1
 #define trig PA0 // pin 22
 #define echo PL0 // pin 49
 
@@ -19,7 +15,7 @@ long int timer;
 
 void init()
 {
-    DDRB |= (1<<led1) | (1<<led2) | (1<<led3);
+
     DDRA |= (1<<trig);
 
     TIMSK4 |= TOIE4;
@@ -55,7 +51,6 @@ int main(void)
         TCCR4B = 0x41;
 
         while ((TIFR4 & (1 << ICF4)) == 0);/* Wait for rising edge */
-        PORTB |= (1<<led2);
 		TCNT4 = 0;	/* Clear Timer counter */
 		TCCR4B = 0x01;	/* Capture on falling edge, No prescaler */
 		TIFR4 = 1<<ICF4;	/* Clear ICP flag (Input Capture flag) */
