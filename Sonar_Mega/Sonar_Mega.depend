@@ -1,0 +1,9 @@
+# depslib dependency file v1.0
+1655121650 source:c:\blok 4\project\sonar_mega\fuse.c
+	<avr/io.h>
+
+1655283585 source:c:\blok 4\project\sonar_mega\main.c
+	<avr/io.h>
+	<util/delay.h>
+	<avr/interrupt.h>
+
