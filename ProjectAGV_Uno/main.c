@@ -12,6 +12,7 @@
         - Ultrasone sensor code Jasper toegevoegd en verwerkt
         - Pin defines IR sensoren aangepast
         - buzzer pin define aangepast
+        - functies voor navigatie aangemaakt
  */
 
  // --- avr includes
@@ -25,6 +26,9 @@
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter
 #define IrSen2 PB2 // linker
+
+// --- algemene waardes
+volatile int aanwaarde = 0;
 
 void init(void)
 {
@@ -60,19 +64,53 @@ ISR(PCINT0_vect)
     _delay_ms(25);
     if(bit_is_clear(PINB, IrSen1))
     {
-        PORTC |= _BV(motorPin);
-        buzzer(350, 1000);
-        _delay_ms(500);
-        PORTC &= ~_BV(motorPin);
+        if(aanwaarde != 1)
+        {
+            PORTC |= _BV(motorPin);
+            buzzer(350, 1000);
+            _delay_ms(500);
+            PORTC &= ~_BV(motorPin);
+        }
+
     }
     if(bit_is_clear(PINB, IrSen2))
     {
-        PORTC |= _BV(motorPin);
-        buzzer(350, 1000);
-        _delay_ms(500);
-        PORTC &= ~_BV(motorPin);
+        if(aanwaarde != 2)
+        {
+            PORTC |= _BV(motorPin);
+            buzzer(350, 1000);
+            _delay_ms(500);
+            PORTC &= ~_BV(motorPin);
+        }
+
     }
 }
+
+void functie1 (void) //links uit
+{
+    aanwaarde = 2;
+}
+
+void functie2 (void) // rechts uit
+{
+    aanwaarde = 1;
+}
+
+void functie3 (void) // geen IR uit
+{
+    aanwaarde = 0;
+}
+
+void functie4 (void)
+{
+
+}
+
+void functie5 (void)
+{
+
+}
+
 
 int main(void)
 {
@@ -81,7 +119,15 @@ int main(void)
 
     while(1)
     {
-
+        functie1();
+        _delay_ms(5000);
+        buzzer(350, 500);
+        functie2();
+        _delay_ms(5000);
+        buzzer(350, 500);
+        functie3();
+        _delay_ms(5000);
+        buzzer(350, 500);
     }
 
     return 0;
