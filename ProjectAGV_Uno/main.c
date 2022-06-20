@@ -26,9 +26,14 @@
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter
 #define IrSen2 PB2 // linker
+#define trig PD0 // pin 0
+#define echo PB0 // pin 8
+
 
 // --- algemene waardes
 volatile int aanwaarde = 0;
+long int timer;
+
 
 void init(void)
 {
@@ -36,6 +41,7 @@ void init(void)
     DDRC |= _BV(motorPin);
     DDRC |= _BV(bochtPin);
     DDRD |= _BV(buzzerPin);
+    DDRD |= (1<<trig);
 
     //init pins:
     PORTB |= _BV(IrSen1);
@@ -44,6 +50,10 @@ void init(void)
     //init PCINT
     PCICR |= (1 << PCIE0);
     PCMSK0 |= ((1 << IrSen1) | (1 << IrSen2));
+
+    //timer1 init
+    TIMSK1 |= TOIE1;
+    TCCR1A = 0;
 
     //init interrupt
     sei();
@@ -86,6 +96,11 @@ ISR(PCINT0_vect)
     }
 }
 
+ISR(TIMER1_OVF_vect)
+{
+    timer++;
+}
+
 void functie1 (void) //links uit
 {
     aanwaarde = 2;
@@ -111,6 +126,35 @@ void functie5 (void)
 
 }
 
+int ultrasoneAfstand(void)
+{
+
+    long count;
+	double distance;
+
+    PORTD |= (1<<trig);
+    _delay_us (10);
+    PORTD &= ~(1<<trig);
+    TCNT1 = 0;
+    timer = 0;
+    TIFR1 = 1<<ICF1;
+    TIFR1 = 1<<TOV1;
+    TCCR1B = 0x41;
+
+    while ((TIFR1 & (1 << ICF1)) == 0);/* Wait for rising edge */
+		TCNT1 = 0;	/* Clear Timer counter */
+		TCCR1B = 0x01;	/* Capture on falling edge, No prescaler */
+		TIFR1 = 1<<ICF1;	/* Clear ICP flag (Input Capture flag) */
+		TIFR1 = 1<<TOV1;	/* Clear Timer Overflow flag */
+		timer = 0;/* Clear Timer overflow count */
+
+    while ((TIFR1 & (1 << ICF1)) == 0);/* Wait for falling edge */
+		count = ICR1 + (65535 * timer);	/* Take count */
+		/* 16MHz Timer freq, sound speed =343 m/s */
+		distance = (double)count / 93.294; // in cm
+    return(distance);
+}
+
 
 int main(void)
 {
@@ -119,15 +163,28 @@ int main(void)
 
     while(1)
     {
-        functie1();
-        _delay_ms(5000);
-        buzzer(350, 500);
-        functie2();
-        _delay_ms(5000);
-        buzzer(350, 500);
-        functie3();
-        _delay_ms(5000);
-        buzzer(350, 500);
+
+
+        if(ultrasoneAfstand() < 150)
+        {
+            _delay_ms(25);
+            if(ultrasoneAfstand() < 100)
+            {
+                PORTC |= _BV(motorPin);
+                _delay_ms(1000);
+                while(ultrasoneAfstand() < 100)
+                {
+                    _delay_ms(100);
+                }
+
+                    PORTC &= ~_BV(motorPin);
+
+            }
+
+
+
+
+        }
     }
 
     return 0;
