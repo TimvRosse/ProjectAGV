@@ -12,6 +12,8 @@
 // --- custom defines ---
 #define stepMode achtste
 #define inpPinUno PC3
+#define inpPinBocht PC2
+#define inpPinBochtL PC4
 
 void bocht(int dir)
 {
@@ -31,46 +33,29 @@ int main(void)
 {
 
     PORTC |= _BV(inpPinUno);
-    //init
-    //init sensor library's
+    PORTC |= _BV(inpPinBocht);
+    PORTC |= _BV(inpPinBochtL);
 
     initStepper();
     stepperSetSpeed(0.7, stepMode);
 
     while(1)
     {
-        //controle afstand beide VL53L0x sensoren
-        //controle IR sensoren potjes
 
-        //if() //als de afstand wat afwijkt, naar rechts sturen
-        {
-            //bijsturen dmv steppers
-            //singleStepperGoTo(200, voorruit, stepMode, linker);
-
-        }
-        //else() //als de afstand wat afwijkt, naar links sturen
-        {
-            //singleStepperGoTo(200, voorruit, stepMode, rechter);
-
-        }
-        //if() // waarde is groter dan verwacht waardoor hij bocht gaat maken
-        {
-            //bochtmaak functie
-        }
-
-        //if() //als er een signaal is dat er een potje staat
-        {
-            //stilstaan dmv steppers
-            //signaal geven met buzzer
-        }
-        if(bit_is_clear(PINC, inpPinUno))
+        if(bit_is_clear(PINC, inpPinUno))//bij signaal rijden
         {
             stepperGoto(20, voorruit, stepMode);
-            //bocht(rechter);
         }
 
+        if(bit_is_clear(PINC, inpPinBocht))
+        {
+            bocht(rechter);
+        }
+        if(bit_is_clear(PINC, inpPinBochtL));
+        {
+            bocht(linker);
+        }
 
-        //stepper motor .. stappen laten maken
     }
 
     return 0;

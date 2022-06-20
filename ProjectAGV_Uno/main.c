@@ -13,6 +13,7 @@
         - Pin defines IR sensoren aangepast
         - buzzer pin define aangepast
         - functies voor navigatie aangemaakt
+        - meer uitleg per functie gegeven
  */
 
  // --- avr includes
@@ -23,6 +24,7 @@
 // --- custom defines
 #define motorPin PC4 //PC2 op nano
 #define bochtPin PC5 //PC3 op nano
+#define bochtPinL PC3 //PC4 op nano
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter
 #define IrSen2 PB2 // linker
@@ -69,7 +71,7 @@ void buzzer(int freq, int aantal)
     }
 }
 
-ISR(PCINT0_vect)
+ISR(PCINT0_vect) //IR sensoren interrupt
 {
     _delay_ms(25);
     if(bit_is_clear(PINB, IrSen1))
@@ -96,7 +98,7 @@ ISR(PCINT0_vect)
     }
 }
 
-ISR(TIMER1_OVF_vect)
+ISR(TIMER1_OVF_vect) //timer1 overflow interrupt
 {
     timer++;
 }
@@ -116,14 +118,30 @@ void functie3 (void) // geen IR uit
     aanwaarde = 0;
 }
 
-void functie4 (void)
+void functie4 (void) //bochtL
 {
+    PORTC |= _BV(bochtPin);
+    _delay_ms(5);
+    PORTC &= ~_BV(bochtPin);
 
+    for(int i = 0; i < 10; i++) //
+    {
+        buzzer(350, 1000);
+        _delay_ms(250);
+    }
 }
 
-void functie5 (void)
+void functie5 (void) //bochtR
 {
+    PORTC |= _BV(bochtPinL);
+    _delay_ms(5);
+    PORTC &= ~_BV(bochtPinL);
 
+    for(int i = 0; i < 10; i++)
+    {
+        buzzer(350, 1000);
+        _delay_ms(250);
+    }
 }
 
 int ultrasoneAfstand(void)
@@ -165,19 +183,19 @@ int main(void)
     {
 
 
-        if(ultrasoneAfstand() < 150)
+        if(ultrasoneAfstand() < 150) //eerste meting, minder precies
         {
             _delay_ms(25);
-            if(ultrasoneAfstand() < 100)
+            if(ultrasoneAfstand() < 100) //debounce afstandsmeting
             {
                 PORTC |= _BV(motorPin);
                 _delay_ms(1000);
-                while(ultrasoneAfstand() < 100)
+                while(ultrasoneAfstand() < 100) //zolang er nog iets voor staat stil blijven staan
                 {
                     _delay_ms(100);
                 }
 
-                    PORTC &= ~_BV(motorPin);
+                    PORTC &= ~_BV(motorPin); //verder rijden na verwijderen obstakel
 
             }
 
