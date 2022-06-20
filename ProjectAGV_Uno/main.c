@@ -3,15 +3,15 @@
     Code voor de Uno, die de sensoren gaat uitlezen
     Voor project AGV, groep D4
 
-        Door: Tim van Rosse, 31/5/2022
+        Door: Tim van Rosse, 20/6/2022
 
  */
 
  /*
-        Changelog V1.1:
-        - Reactie op Ir sensoren dmv Buzzer toon
-        - -> Motoren stoppen ook met draaien voor bepaalde tijd
-        - Pins Ir sensoren gedefined
+        Changelog V1.2:
+        - Ultrasone sensor code Jasper toegevoegd en verwerkt
+        - Pin defines IR sensoren aangepast
+        - buzzer pin define aangepast
  */
 
  // --- avr includes
@@ -22,9 +22,9 @@
 // --- custom defines
 #define motorPin PC4 //PC2 op nano
 #define bochtPin PC5 //PC3 op nano
-#define buzzerPin PD6
-#define IrSen1 PB0 //rechter
-#define IrSen2 PB1 // linker
+#define buzzerPin PD1
+#define IrSen1 PB1 //rechter
+#define IrSen2 PB2 // linker
 
 void init(void)
 {
@@ -34,7 +34,6 @@ void init(void)
     DDRD |= _BV(buzzerPin);
 
     //init pins:
-    PORTC |= _BV(motorPin);
     PORTB |= _BV(IrSen1);
     PORTB |= _BV(IrSen2);
 
