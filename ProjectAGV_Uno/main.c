@@ -22,9 +22,9 @@
 #include <avr/interrupt.h>
 
 // --- custom defines
-#define motorPin PC4 //PC2 op nano
-#define bochtPin PC5 //PC3 op nano
-#define bochtPinL PC3 //PC4 op nano
+#define motorPin PC2 //PC2 op nano
+#define bochtPin PC3 //PC3 op nano
+#define bochtPinL PC1 //PC4 op nano
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter
 #define IrSen2 PB2 // linker
@@ -56,6 +56,10 @@ void init(void)
     //timer1 init
     TIMSK1 |= TOIE1;
     TCCR1A = 0;
+
+    //timer0 init
+    TCCR0A = 0;
+
 
     //init interrupt
     sei();
@@ -124,7 +128,7 @@ void functie4 (void) //bochtL
     _delay_ms(5);
     PORTC &= ~_BV(bochtPin);
 
-    for(int i = 0; i < 10; i++) //
+    for(int i = 0; i < 10; i++)
     {
         buzzer(350, 1000);
         _delay_ms(250);
