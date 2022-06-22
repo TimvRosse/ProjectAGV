@@ -1,10 +1,7 @@
 /*
-
     Code voor de Uno, die de sensoren gaat uitlezen
     Voor project AGV, groep D4
-
         Door: Tim van Rosse, 20/6/2022
-
  */
 
  /*
@@ -22,8 +19,8 @@
 #include <avr/interrupt.h>
 
 // --- custom defines
-#define motorPin PC2 //PC2 op nano
-#define bochtPin PC3 //PC3 op nano
+#define motorPin PC3 //PC2 op nano
+#define bochtPin PC2 //PC3 op nano
 #define bochtPinL PC1 //PC4 op nano
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter

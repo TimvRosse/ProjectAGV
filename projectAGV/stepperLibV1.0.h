@@ -22,6 +22,7 @@
 #define half 2
 #define kwart 4
 #define achtste 8
+#define zestiende 16
 
 void initStepper(void);
 void stepperGoto(int steps, int dir, int mode);

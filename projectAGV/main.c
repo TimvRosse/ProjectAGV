@@ -10,9 +10,9 @@
 #include "stepperLibV1.0.h"
 
 // --- custom defines ---
-#define stepMode achtste
-#define inpPinUno PC3
-#define inpPinBocht PC2
+#define stepMode zestiende
+#define inpPinUno PC2
+#define inpPinBocht PC3
 #define inpPinBochtL PC4
 
 void bocht(int dir)
@@ -37,7 +37,7 @@ int main(void)
     PORTC |= _BV(inpPinBochtL);
 
     initStepper();
-    stepperSetSpeed(0.7, stepMode);
+    stepperSetSpeed(1, stepMode);
 
     while(1)
     {
@@ -49,11 +49,11 @@ int main(void)
 
         if(bit_is_clear(PINC, inpPinBocht))
         {
-            bocht(rechter);
+            //bocht(rechter);
         }
         if(bit_is_clear(PINC, inpPinBochtL));
         {
-            bocht(linker);
+            //bocht(linker);
         }
 
     }
