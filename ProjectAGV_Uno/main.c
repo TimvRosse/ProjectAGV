@@ -32,6 +32,7 @@
 // --- algemene waardes
 volatile int aanwaarde = 0;
 long int timer;
+volatile int lengteklokje = 0;
 
 
 void init(void)
@@ -39,12 +40,14 @@ void init(void)
     //DDR Reg:
     DDRC |= _BV(motorPin);
     DDRC |= _BV(bochtPin);
+    DDRC |= _BV(bochtPinL);
     DDRD |= _BV(buzzerPin);
     DDRD |= (1<<trig);
 
     //init pins:
     PORTB |= _BV(IrSen1);
     PORTB |= _BV(IrSen2);
+
 
     //init PCINT
     PCICR |= (1 << PCIE0);
@@ -56,7 +59,8 @@ void init(void)
 
     //timer0 init
     TCCR0A = 0;
-
+    TCCR0B = (1 << CS00) | (0 << CS01) | (1 << CS02); //~61Hz
+    TIMSK0 = (1 << TOIE0);
 
     //init interrupt
     sei();
@@ -79,10 +83,10 @@ ISR(PCINT0_vect) //IR sensoren interrupt
     {
         if(aanwaarde != 1)
         {
-            PORTC |= _BV(motorPin);
+            PORTC &= ~_BV(motorPin);
             buzzer(350, 1000);
             _delay_ms(500);
-            PORTC &= ~_BV(motorPin);
+            PORTC |= _BV(motorPin);
         }
 
     }
@@ -90,10 +94,10 @@ ISR(PCINT0_vect) //IR sensoren interrupt
     {
         if(aanwaarde != 2)
         {
-            PORTC |= _BV(motorPin);
+            PORTC &= ~_BV(motorPin);
             buzzer(350, 1000);
             _delay_ms(500);
-            PORTC &= ~_BV(motorPin);
+            PORTC |= _BV(motorPin);
         }
 
     }
@@ -104,46 +108,14 @@ ISR(TIMER1_OVF_vect) //timer1 overflow interrupt
     timer++;
 }
 
-void functie1 (void) //links uit
+ISR(TIMER0_OVF_vect)
 {
-    aanwaarde = 2;
+    lengteklokje++;
+    //TCNT0 = 0;
+    TIFR0 = (1<<TOV0);
 }
 
-void functie2 (void) // rechts uit
-{
-    aanwaarde = 1;
-}
 
-void functie3 (void) // geen IR uit
-{
-    aanwaarde = 0;
-}
-
-void functie4 (void) //bochtL
-{
-    PORTC |= _BV(bochtPin);
-    _delay_ms(5);
-    PORTC &= ~_BV(bochtPin);
-
-    for(int i = 0; i < 10; i++)
-    {
-        buzzer(350, 1000);
-        _delay_ms(250);
-    }
-}
-
-void functie5 (void) //bochtR
-{
-    PORTC |= _BV(bochtPinL);
-    _delay_ms(5);
-    PORTC &= ~_BV(bochtPinL);
-
-    for(int i = 0; i < 10; i++)
-    {
-        buzzer(350, 1000);
-        _delay_ms(250);
-    }
-}
 
 int ultrasoneAfstand(void)
 {
@@ -178,7 +150,9 @@ int ultrasoneAfstand(void)
 int main(void)
 {
     init();
-
+    PORTC |= _BV(bochtPin);
+    PORTC |= _BV(bochtPinL);
+    PORTC |= _BV(motorPin);
 
     while(1)
     {
@@ -187,16 +161,16 @@ int main(void)
         if(ultrasoneAfstand() < 150) //eerste meting, minder precies
         {
             _delay_ms(25);
-            if(ultrasoneAfstand() < 100) //debounce afstandsmeting
+            if(ultrasoneAfstand() < 70) //debounce afstandsmeting
             {
-                PORTC |= _BV(motorPin);
+                PORTC &= ~_BV(motorPin);
                 _delay_ms(1000);
                 while(ultrasoneAfstand() < 100) //zolang er nog iets voor staat stil blijven staan
                 {
                     _delay_ms(100);
                 }
 
-                    PORTC &= ~_BV(motorPin); //verder rijden na verwijderen obstakel
+                    PORTC |= _BV(motorPin); //verder rijden na verwijderen obstakel
 
             }
 
@@ -204,6 +178,23 @@ int main(void)
 
 
         }
+        int telwaarde = lengteklokje;
+
+        if(telwaarde > 530)
+        {
+            PORTC &= ~_BV(motorPin);
+            _delay_ms(5);
+            PORTC |= _BV(bochtPinL);
+            _delay_ms(5);
+            PORTC &= ~_BV(bochtPinL);
+            _delay_ms(5);
+            PORTC |= _BV(motorPin);
+            lengteklokje = 0;
+        }
+
+
+
+
     }
 
     return 0;
