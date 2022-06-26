@@ -19,9 +19,9 @@
 #include <avr/interrupt.h>
 
 // --- custom defines
-#define motorPin PC3 //PC2 op nano
-#define bochtPin PC2 //PC3 op nano
-#define bochtPinL PC1 //PC4 op nano
+#define motorPin PC2 //PC2 op nano
+#define bochtPin PC5 //PC3 op nano
+#define bochtPinL PC6 //PC4 op nano
 #define buzzerPin PD1
 #define IrSen1 PB1 //rechter
 #define IrSen2 PB2 // linker

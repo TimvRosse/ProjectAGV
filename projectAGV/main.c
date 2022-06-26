@@ -5,15 +5,16 @@
 // --- includes codeblocks ---
 #include <avr/io.h>
 #include <avr/delay.h>
+#include <avr/interrupt.h>
 
 // --- includes custom --
 #include "stepperLibV1.0.h"
 
 // --- custom defines ---
 #define stepMode zestiende
-#define inpPinUno PC2
-#define inpPinBocht PC3
-#define inpPinBochtL PC4
+#define inpPinUno PC3
+#define inpPinBocht PC4
+#define inpPinBochtL PC5
 
 void bocht(int dir)
 {
@@ -29,8 +30,18 @@ void bocht(int dir)
     stepperGoto(97, voorruit, stepMode);
 }
 
+ISR(PCINT1_vect)
+{
+    if(bit_is_clear(PINC, inpPinUno))
+    {
+
+    }
+
+}
+
 int main(void)
 {
+    DDRC &= ~_BV(inpPinUno);
 
     PORTC |= _BV(inpPinUno);
     PORTC |= _BV(inpPinBocht);
@@ -39,19 +50,23 @@ int main(void)
     initStepper();
     stepperSetSpeed(1, stepMode);
 
+    PCICR |= (1 << PCIE1);
+    PCMSK1 |= ((1 << inpPinUno) | (1 << inpPinBochtL) | (1 << inpPinBocht));
+    sei();
+
     while(1)
     {
 
         if(bit_is_clear(PINC, inpPinUno))//bij signaal rijden
         {
-            stepperGoto(20, voorruit, stepMode);
+            bocht(rechter);
         }
 
         if(bit_is_clear(PINC, inpPinBocht))
         {
             //bocht(rechter);
         }
-        if(bit_is_clear(PINC, inpPinBochtL));
+        if(bit_is_clear(PINC, inpPinBochtL))
         {
             //bocht(linker);
         }

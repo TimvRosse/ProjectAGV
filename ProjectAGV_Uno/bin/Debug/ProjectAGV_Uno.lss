@@ -122,7 +122,7 @@ void init(void)
       b2:	e7 e2       	ldi	r30, 0x27	; 39
       b4:	f0 e0       	ldi	r31, 0x00	; 0
       b6:	80 81       	ld	r24, Z
-      b8:	88 60       	ori	r24, 0x08	; 8
+      b8:	84 60       	ori	r24, 0x04	; 4
       ba:	8c 93       	st	X, r24
     DDRC |= _BV(bochtPin);
       bc:	a7 e2       	ldi	r26, 0x27	; 39
@@ -130,7 +130,7 @@ void init(void)
       c0:	e7 e2       	ldi	r30, 0x27	; 39
       c2:	f0 e0       	ldi	r31, 0x00	; 0
       c4:	80 81       	ld	r24, Z
-      c6:	84 60       	ori	r24, 0x04	; 4
+      c6:	80 62       	ori	r24, 0x20	; 32
       c8:	8c 93       	st	X, r24
     DDRD |= _BV(buzzerPin);
       ca:	aa e2       	ldi	r26, 0x2A	; 42
@@ -723,7 +723,7 @@ _delay_loop_2(uint16_t __count)
      464:	e8 e2       	ldi	r30, 0x28	; 40
      466:	f0 e0       	ldi	r31, 0x00	; 0
      468:	80 81       	ld	r24, Z
-     46a:	88 60       	ori	r24, 0x08	; 8
+     46a:	84 60       	ori	r24, 0x04	; 4
      46c:	8c 93       	st	X, r24
             buzzer(350, 1000);
      46e:	8e e5       	ldi	r24, 0x5E	; 94
@@ -875,7 +875,7 @@ _delay_ms(double __ms)
      562:	e8 e2       	ldi	r30, 0x28	; 40
      564:	f0 e0       	ldi	r31, 0x00	; 0
      566:	80 81       	ld	r24, Z
-     568:	87 7f       	andi	r24, 0xF7	; 247
+     568:	8b 7f       	andi	r24, 0xFB	; 251
      56a:	8c 93       	st	X, r24
         }
 
@@ -906,7 +906,7 @@ _delay_ms(double __ms)
      594:	e8 e2       	ldi	r30, 0x28	; 40
      596:	f0 e0       	ldi	r31, 0x00	; 0
      598:	80 81       	ld	r24, Z
-     59a:	88 60       	ori	r24, 0x08	; 8
+     59a:	84 60       	ori	r24, 0x04	; 4
      59c:	8c 93       	st	X, r24
             buzzer(350, 1000);
      59e:	8e e5       	ldi	r24, 0x5E	; 94
@@ -1058,7 +1058,7 @@ _delay_ms(double __ms)
      692:	e8 e2       	ldi	r30, 0x28	; 40
      694:	f0 e0       	ldi	r31, 0x00	; 0
      696:	80 81       	ld	r24, Z
-     698:	87 7f       	andi	r24, 0xF7	; 247
+     698:	8b 7f       	andi	r24, 0xFB	; 251
      69a:	8c 93       	st	X, r24
         }
 
@@ -1201,7 +1201,7 @@ void functie4 (void) //bochtL
      780:	e8 e2       	ldi	r30, 0x28	; 40
      782:	f0 e0       	ldi	r31, 0x00	; 0
      784:	80 81       	ld	r24, Z
-     786:	84 60       	ori	r24, 0x04	; 4
+     786:	80 62       	ori	r24, 0x20	; 32
      788:	8c 93       	st	X, r24
      78a:	80 e0       	ldi	r24, 0x00	; 0
      78c:	90 e0       	ldi	r25, 0x00	; 0
@@ -1347,7 +1347,7 @@ _delay_ms(double __ms)
      872:	e8 e2       	ldi	r30, 0x28	; 40
      874:	f0 e0       	ldi	r31, 0x00	; 0
      876:	80 81       	ld	r24, Z
-     878:	8b 7f       	andi	r24, 0xFB	; 251
+     878:	8f 7d       	andi	r24, 0xDF	; 223
      87a:	8c 93       	st	X, r24
 
     for(int i = 0; i < 10; i++)
@@ -1550,7 +1550,7 @@ void functie5 (void) //bochtR
      9b2:	e8 e2       	ldi	r30, 0x28	; 40
      9b4:	f0 e0       	ldi	r31, 0x00	; 0
      9b6:	80 81       	ld	r24, Z
-     9b8:	82 60       	ori	r24, 0x02	; 2
+     9b8:	80 64       	ori	r24, 0x40	; 64
      9ba:	8c 93       	st	X, r24
      9bc:	80 e0       	ldi	r24, 0x00	; 0
      9be:	90 e0       	ldi	r25, 0x00	; 0
@@ -1696,7 +1696,7 @@ _delay_ms(double __ms)
      aa4:	e8 e2       	ldi	r30, 0x28	; 40
      aa6:	f0 e0       	ldi	r31, 0x00	; 0
      aa8:	80 81       	ld	r24, Z
-     aaa:	8d 7f       	andi	r24, 0xFD	; 253
+     aaa:	8f 7b       	andi	r24, 0xBF	; 191
      aac:	8c 93       	st	X, r24
 
     for(int i = 0; i < 10; i++)
@@ -2480,7 +2480,7 @@ _delay_loop_2(uint16_t __count)
      fb2:	e8 e2       	ldi	r30, 0x28	; 40
      fb4:	f0 e0       	ldi	r31, 0x00	; 0
      fb6:	80 81       	ld	r24, Z
-     fb8:	88 60       	ori	r24, 0x08	; 8
+     fb8:	84 60       	ori	r24, 0x04	; 4
      fba:	8c 93       	st	X, r24
      fbc:	80 e0       	ldi	r24, 0x00	; 0
      fbe:	90 e0       	ldi	r25, 0x00	; 0
@@ -2774,7 +2774,7 @@ _delay_ms(double __ms)
     1196:	e8 e2       	ldi	r30, 0x28	; 40
     1198:	f0 e0       	ldi	r31, 0x00	; 0
     119a:	80 81       	ld	r24, Z
-    119c:	87 7f       	andi	r24, 0xF7	; 247
+    119c:	8b 7f       	andi	r24, 0xFB	; 251
     119e:	8c 93       	st	X, r24
     11a0:	89 ce       	rjmp	.-750    	; 0xeb4 <main+0x18>
 
